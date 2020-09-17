@@ -172,6 +172,11 @@ bool MapManager::CanPlayerEnter(uint32 mapid, Player* player, bool loginCheck)
     if (loginCheck && entry->IsScenario())
         return false;
 
+    if (entry->ExpansionID == 4 && entry->IsScenario() && entry->ID == 1031)
+        // Current supported Mists Of Pandaria scenarios:
+        // 1031 - Arena of Annhilation
+        return true;
+
     InstanceTemplate const* instance = sObjectMgr->GetInstanceTemplate(mapid);
     if (!instance && !entry->IsScenario())
         return false;

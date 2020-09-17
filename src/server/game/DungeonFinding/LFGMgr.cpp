@@ -1945,21 +1945,7 @@ LfgLockMap LFGMgr::GetLockedDungeons(ObjectGuid guid)
         else if (dungeon->dbc->MinGear && avgItemLevel < dungeon->dbc->MinGear)
         {
             lockData.currItemLevel = avgItemLevel;
-			if (dungeon->expansion == 6)
-			{
-				if (dungeon->difficulty == DIFFICULTY_NORMAL)
-				{
-					lockData.reqItemLevel = 775;
-				}
-				if (dungeon->difficulty == DIFFICULTY_HEROIC) // Heroic and legion dungeon
-				{
-					lockData.reqItemLevel = 810;
-				}
-			}
-			else
-			{
-				lockData.reqItemLevel = dungeon->dbc->MinGear;
-			}
+            lockData.reqItemLevel = dungeon->dbc->MinGear;
             lockData.status = LFG_LOCKSTATUS_TOO_LOW_GEAR_SCORE;
         }
         else
@@ -1986,6 +1972,12 @@ LfgLockMap LFGMgr::GetLockedDungeons(ObjectGuid guid)
                         lockData.status = LFG_LOCKSTATUS_MISSING_ITEM;
                 }
             }
+        }
+
+        if (lockData.status == LFG_LOCKSTATUS_TOO_HIGH_LEVEL)
+        {
+            if (dungeon->internalType == 7) // Scenarios
+                lockData.status = LFG_LOCKSTATUS_OK;
         }
 
         /* check of dbc->RequiredPlayerConditionId ?

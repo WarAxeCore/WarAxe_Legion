@@ -356,6 +356,12 @@ LfgCompatibility LFGQueue::CheckCompatibility(GuidList check)
                 forceMinPlayers = true;
                 noNeedWaightConfirm = true;
             }
+            if (dungeon->map == 1031) // Scenario (Arena of Annihilation)
+            {
+                minGroupSize = 1;
+                forceMinPlayers = true;
+                noNeedWaightConfirm = false;
+            }
         }
 
     if (sWorld->getBoolConfig(CONFIG_LFG_DEBUG_JOIN))

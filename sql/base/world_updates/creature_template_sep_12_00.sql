@@ -1,0 +1,1 @@
+UPDATE `creature_template` SET `ScriptName` = 'npc_lorewalker_fu' WHERE `entry` = 78709;

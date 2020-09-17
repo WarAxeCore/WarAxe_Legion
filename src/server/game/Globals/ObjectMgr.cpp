@@ -1952,11 +1952,14 @@ void ObjectMgr::LoadCreatures()
 
         if (!mapEntry->IsBattlegroundOrArena())
         {
-            if (!IsTransportMap(data.mapid) && data.spawnMask & ~spawnMasks[data.mapid])
+            if (data.spawnMask != 4096 && data.mapid != 1031)
             {
-                TC_LOG_ERROR(LOG_FILTER_SQL, "Table `creature` have creature (GUID: " UI64FMTD ") that have wrong spawn mask " UI64FMTD " including not supported difficulty modes for map (Id: %u) spawnMasks[data.mapid]: %u.", guid, data.spawnMask, data.mapid, spawnMasks[data.mapid]);
-                WorldDatabase.PExecute("UPDATE creature SET spawnMask = " UI64FMTD " WHERE guid = %u", spawnMasks[data.mapid], guid);
-                data.spawnMask = spawnMasks[data.mapid];
+                if (!IsTransportMap(data.mapid) && data.spawnMask & ~spawnMasks[data.mapid])
+                {
+                    TC_LOG_ERROR(LOG_FILTER_SQL, "Table `creature` have creature (GUID: " UI64FMTD ") that have wrong spawn mask " UI64FMTD " including not supported difficulty modes for map (Id: %u) spawnMasks[data.mapid]: %u.", guid, data.spawnMask, data.mapid, spawnMasks[data.mapid]);
+                    WorldDatabase.PExecute("UPDATE creature SET spawnMask = " UI64FMTD " WHERE guid = %u", spawnMasks[data.mapid], guid);
+                    data.spawnMask = spawnMasks[data.mapid];
+                }
             }
         }
 
@@ -2480,11 +2483,14 @@ void ObjectMgr::LoadGameobjects()
 
         data.spawnMask      = fields[17].GetUInt64();
 
-        if (!IsTransportMap(data.mapid) && data.spawnMask & ~spawnMasks[data.mapid])
+        if (data.spawnMask != 4096 && data.mapid != 1031)
         {
-            TC_LOG_ERROR(LOG_FILTER_SQL, "Table `gameobject` has gameobject (GUID: " UI64FMTD " Entry: %u) that has wrong spawn mask " UI64FMTD " including not supported difficulty modes for map (Id: %u), skip", guid, data.id, data.spawnMask, data.mapid);
-            data.spawnMask = spawnMasks[data.mapid];
-            WorldDatabase.PExecute("UPDATE gameobject SET spawnMask = " UI64FMTD " WHERE guid = %u", spawnMasks[data.mapid], guid);
+            if (!IsTransportMap(data.mapid) && data.spawnMask & ~spawnMasks[data.mapid])
+            {
+                TC_LOG_ERROR(LOG_FILTER_SQL, "Table `gameobject` has gameobject (GUID: " UI64FMTD " Entry: %u) that has wrong spawn mask " UI64FMTD " including not supported difficulty modes for map (Id: %u), skip", guid, data.id, data.spawnMask, data.mapid);
+                data.spawnMask = spawnMasks[data.mapid];
+                WorldDatabase.PExecute("UPDATE gameobject SET spawnMask = " UI64FMTD " WHERE guid = %u", spawnMasks[data.mapid], guid);
+            }
         }
 
         data.phaseMask      = fields[18].GetUInt16();

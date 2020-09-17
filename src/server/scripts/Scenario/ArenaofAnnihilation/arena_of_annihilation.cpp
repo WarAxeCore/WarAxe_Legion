@@ -19,6 +19,8 @@
 #include "ScriptMgr.h"
 #include "ScriptedCreature.h"
 #include "arena_of_annihilation.h"
+#include "ScenarioMgr.h"
+#include "Map.h"
 
 enum Says
 {
@@ -193,8 +195,13 @@ public:
 
         void JustDied(Unit* /*killer*/) override
         {
+            instance->instance->ApplyOnEveryPlayer([&](Player* player)
+            {
+                player->KilledMonsterCredit(64894);
+            });
             if (Creature* gurgthock = instance->instance->GetCreature(instance->GetGuidData(NPC_GURGTHOCK)))
                 gurgthock->AI()->Talk(SAY_SATAY_END);
+
             _JustDied();
         }
 
@@ -287,6 +294,10 @@ public:
 
         void JustDied(Unit* /*killer*/) override
         {
+            instance->instance->ApplyOnEveryPlayer([&](Player* player)
+            {
+                player->KilledMonsterCredit(64894);
+            });
             if (Creature* gurgthock = instance->instance->GetCreature(instance->GetGuidData(NPC_GURGTHOCK)))
                 gurgthock->AI()->Talk(SAY_KOBO_END);
             _JustDied();
@@ -428,6 +439,10 @@ public:
 
         void JustDied(Unit* /*killer*/) override
         {
+            instance->instance->ApplyOnEveryPlayer([&](Player* player)
+            {
+                player->KilledMonsterCredit(64894);
+            });
             if (Creature* gurgthock = instance->instance->GetCreature(instance->GetGuidData(NPC_GURGTHOCK)))
                 gurgthock->AI()->Talk(SAY_MAKI_END);
             _JustDied();
@@ -660,7 +675,7 @@ void AddSC_arena_of_annihilation()
     new boss_cloudbender_kobo();
     new boss_maki_waterblade();
     new npc_kobo_twister();
-    //new go_gong_temple_tiger();
+    new go_gong_temple_tiger();
     //new at_enter_arena_annihilation();
     new spell_jade_lightning_strike();
 }

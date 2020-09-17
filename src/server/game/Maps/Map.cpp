@@ -4017,6 +4017,11 @@ bool InstanceMap::CanEnter(Player* player)
     if (player->isGameMaster())
         return Map::CanEnter(player);
 
+    if (IsScenario() && GetId() == 1031) // Mists of Pandaria Scenario
+        // Current supported scenarios:
+        // 1031 - Arena of Annhilation
+        return true;
+
     // cannot enter if the instance is full (player cap), GMs don't count
     uint32 maxPlayers = GetMaxPlayers();
     if (GetPlayersCountExceptGMs() >= maxPlayers && GetId() != 1191)

@@ -993,6 +993,7 @@ void AddSC_westfall();
 void AddSC_wetlands();
 
 // Pandaria
+void AddSC_npc_lorewalker_fu();
 void AddSC_instance_temple_of_jade_serpent();       // Temple of Jade Serpent
 void AddSC_boss_wise_mari();
 void AddSC_boss_lorewalker_stonestep();
@@ -2324,6 +2325,7 @@ void AddEasternKingdomsScripts()
 void AddPandarieScripts()
 {
 #ifdef SCRIPTS
+	AddSC_npc_lorewalker_fu();
     AddSC_instance_temple_of_jade_serpent();        // Temple of Jade Serpent
     AddSC_boss_wise_mari();
     AddSC_boss_lorewalker_stonestep();
