@@ -4017,9 +4017,10 @@ bool InstanceMap::CanEnter(Player* player)
     if (player->isGameMaster())
         return Map::CanEnter(player);
 
-    if (IsScenario() && GetId() == 1031) // Mists of Pandaria Scenario
+    if (IsScenario() && GetId() == 1031 || GetId() == 1024) // Mists of Pandaria Scenario
         // Current supported scenarios:
         // 1031 - Arena of Annhilation
+        // 1024 - Greenstone Village
         return true;
 
     // cannot enter if the instance is full (player cap), GMs don't count
@@ -4459,7 +4460,7 @@ void InstanceMap::SendResetWarnings(uint32 timeLeft) const
 void InstanceMap::SendInstanceGroupSizeChanged() const
 {
     for (const auto& itr : m_mapRefManager)
-        itr.getSource()->SendDirectMessage(WorldPackets::Instance::InstanceGroupSizeChanged(GetPlayersCountExceptGMs()).Write());
+        itr.getSource()->SendDirectMessage(WorldPackets::Instance::InstanceGroupSizeChanged(GetPlayerCount()).Write());
 }
 
 void InstanceMap::SetResetSchedule(bool on)
