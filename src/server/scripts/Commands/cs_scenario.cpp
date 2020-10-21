@@ -30,6 +30,7 @@ public:
         static std::vector<ChatCommand> scenarioCommandTable =
         {
             {    "info",     SEC_GAMEMASTER, false,  &HandleScenarioInfoCommand, ""},
+            {    "progress", SEC_GAMEMASTER, false,  &HandleScenarioProgressCommand, ""},
             {    "step",     SEC_GAMEMASTER, false,  &HandleScenarioStepCommand, ""}
         };
 
@@ -74,6 +75,36 @@ public:
         }
 
         return "Unknown";
+    }
+
+    static bool HandleScenarioProgressCommand(ChatHandler* handler, char const* args)
+    {
+        Player* player = handler->GetSession()->GetPlayer();
+        char* stepstr = strtok((char*)args, " ");
+        uint8 step = stepstr ? atoi(stepstr) : 0;
+
+        Map* map = player->GetMap();
+        if (!map)
+            handler->PSendSysMessage("Player is not in map?");
+            return false;
+
+        InstanceMap* instance = map->ToInstanceMap();
+        if (!instance)
+        {
+            handler->PSendSysMessage("Player is not in instance.");
+            return false;
+        }
+
+        Scenario* progress = sScenarioMgr->GetScenario(instance->GetInstanceId());
+        if (!progress)
+        {
+            handler->PSendSysMessage("There is no scenario progress for map %u instanceId %u", instance->GetInstanceId());
+            return false;
+        }
+
+        progress->UpdateAchievementCriteria(CRITERIA_TYPE_SCRIPT_EVENT_2, step, 1);
+        handler->PSendSysMessage("Scenario critieria updated");
+        return true;
     }
 
     static bool HandleScenarioInfoCommand(ChatHandler* handler, char const* args)
