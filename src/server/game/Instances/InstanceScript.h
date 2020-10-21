@@ -154,6 +154,8 @@ class InstanceScript : public ZoneScript
         virtual void Update(uint32 /*diff*/) {}
         void UpdateForScript(uint32 diff);
 
+        void UpdateScenarioProgress(uint32 objective, CriteriaTypes criteria_type);
+
         ObjectGuid GetObjectGuid(uint32 type) const;
         ObjectGuid GetGuidData(uint32 type) const override;
 

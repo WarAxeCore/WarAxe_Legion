@@ -890,6 +890,21 @@ void InstanceScript::UpdateForScript(uint32 diff)
     }
 }
 
+void InstanceScript::UpdateScenarioProgress(uint32 objective, CriteriaTypes criteria_type)
+{
+    Map::PlayerList const &PlList = instance->GetPlayers();
+
+    if (PlList.isEmpty())
+        return;
+
+    for (Map::PlayerList::const_iterator i = PlList.begin(); i != PlList.end(); ++i)
+        if (Player* player = i->getSource())
+        {
+            player->UpdateAchievementCriteria(criteria_type, objective);
+            break;
+        }
+}
+
 ObjectGuid InstanceScript::GetObjectGuid(uint32 type) const
 {
     auto i = _objectGuids.find(type);
