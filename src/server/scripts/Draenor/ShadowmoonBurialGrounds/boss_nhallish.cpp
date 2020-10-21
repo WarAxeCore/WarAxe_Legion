@@ -4,6 +4,8 @@
 */
 
 #include "shadowmoon_burial_grounds.h"
+#include "ScriptMgr.h"
+#include "ScriptedCreature.h"
 
 enum Says
 {

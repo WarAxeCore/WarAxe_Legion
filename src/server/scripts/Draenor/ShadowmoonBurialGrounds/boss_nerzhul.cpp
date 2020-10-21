@@ -5,6 +5,8 @@
 
 #include "CreatureGroups.h"
 #include "shadowmoon_burial_grounds.h"
+#include "ScriptMgr.h"
+#include "ScriptedCreature.h"
 
 #define MAX_DIST    60
 
