@@ -393,7 +393,7 @@ class AchievementMgr
 
         uint64 m_canUpdateAchiev = 0;
 
-    private:
+    public:
         enum ProgressType { PROGRESS_SET, PROGRESS_ACCUMULATE, PROGRESS_HIGHEST };
         void SendAchievementEarned(AchievementEntry const* achievement);
         void SendCriteriaUpdate(CriteriaProgress const* progress, uint32 timeElapsed, bool timedCompleted) const;

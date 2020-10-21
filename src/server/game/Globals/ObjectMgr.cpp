@@ -1952,7 +1952,7 @@ void ObjectMgr::LoadCreatures()
 
         if (!mapEntry->IsBattlegroundOrArena())
         {
-            if (data.spawnMask != 4096 && data.mapid != 1031)
+            if (data.spawnMask != 4096)
             {
                 if (!IsTransportMap(data.mapid) && data.spawnMask & ~spawnMasks[data.mapid])
                 {
@@ -2483,7 +2483,7 @@ void ObjectMgr::LoadGameobjects()
 
         data.spawnMask      = fields[17].GetUInt64();
 
-        if (data.spawnMask != 4096 && data.mapid != 1031)
+        if (data.spawnMask != 4096)
         {
             if (!IsTransportMap(data.mapid) && data.spawnMask & ~spawnMasks[data.mapid])
             {

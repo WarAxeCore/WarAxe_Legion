@@ -19,6 +19,7 @@
 #include "ScriptMgr.h"
 #include "ScriptedCreature.h"
 #include "greenstone_village.h"
+#include "ScenarioMgr.h"
 
 class instance_greenstone_village : public InstanceMapScript
 {
@@ -37,6 +38,8 @@ public:
 
         void Initialize() override
         {
+			
+
         }
 
         void OnPlayerEnter(Player* player) override
@@ -47,7 +50,32 @@ public:
         {
             switch (type)
             {
-                case 0:
+				// Stage 1
+                case DATA_MEILA:
+					if (instance)
+					{
+						Scenario* m_Scenario = sScenarioMgr->GetScenario(instance->GetInstanceId());
+						for (Map::PlayerList::const_iterator itr = instance->GetPlayers().begin(); itr != instance->GetPlayers().end(); ++itr)
+						{
+							Player* player = itr->getSource();
+							if (!player)
+								continue;
+
+							player->UpdateAchievementCriteria(CRITERIA_TYPE_SCRIPT_EVENT_3, 42260);
+
+						}
+					}
+					break;
+				case DATA_PORTLY_SHUNG:
+					break;
+				case DATA_SCRIBE_RINJI:
+					break;
+				case DATA_SWAN:
+					break;
+				case DATA_LA_LIUPO:
+					break;
+				case DATA_MAYOR_LIN:
+					break;
                 default:
                     break;
             }

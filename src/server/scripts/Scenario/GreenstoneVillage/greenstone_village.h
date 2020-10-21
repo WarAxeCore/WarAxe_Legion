@@ -25,7 +25,12 @@ enum Spells
 
 enum Data
 {
-    DATA_NONE,
+    DATA_MEILA,
+	DATA_PORTLY_SHUNG,
+	DATA_SCRIBE_RINJI,
+	DATA_SWAN,
+	DATA_LA_LIUPO,
+	DATA_MAYOR_LIN,
 };
 
 enum eCreatures

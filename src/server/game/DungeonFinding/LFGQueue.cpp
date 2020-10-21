@@ -356,7 +356,9 @@ LfgCompatibility LFGQueue::CheckCompatibility(GuidList check)
                 forceMinPlayers = true;
                 noNeedWaightConfirm = true;
             }
-            if (dungeon->map == 1031) // Scenario (Arena of Annihilation)
+            // Scenario (Arena of Annihilation, Greenstone Village)
+            // Find a better way to do this, we need a check if the player is over 91 that you only need 1 player.
+            if (dungeon->map == 1031 || dungeon->map == 1024)
             {
                 minGroupSize = 1;
                 forceMinPlayers = true;

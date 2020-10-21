@@ -1166,10 +1166,12 @@ class Unit : public WorldObject
         float GetMeleeReach() const { float reach = m_floatValues[UNIT_FIELD_COMBAT_REACH]; return reach > MIN_MELEE_REACH ? reach : MIN_MELEE_REACH; }
         bool IsWithinCombatRange(const Unit* obj, float dist2compare) const;
         bool IsWithinMeleeRange(const Unit* obj, float dist = MELEE_RANGE) const;
+        uint32 _oppressionStacks;
         uint32 m_extraAttacks;
         bool m_canDualWield;
         float countCrit;
 
+        void BossYell(const char* text, uint32 soundId);
         void _addAttacker(Unit* pAttacker);                  // must be called only from Unit::Attack(Unit*)
         void _removeAttacker(Unit* pAttacker);               // must be called only from Unit::AttackStop()
         Unit* getAttackerForHelper() const;                 // If someone wants to help, who to give them
@@ -1687,6 +1689,7 @@ class Unit : public WorldObject
         AuraApplicationMap      & GetAppliedAuras()       { return m_appliedAuras; }
         AuraApplicationMap const& GetAppliedAuras() const { return m_appliedAuras; }
 
+        void SetScaledHp(uint32 regularHp);
         void RemoveAura(AuraApplicationMap::iterator &i, AuraRemoveMode mode = AURA_REMOVE_BY_DEFAULT);
         void RemoveAura(uint32 spellId, ObjectGuid casterGUID = ObjectGuid::Empty, uint32 reqEffMask = 0, AuraRemoveMode removeMode = AURA_REMOVE_BY_DEFAULT);
         void RemoveAura(AuraApplication * aurApp, AuraRemoveMode mode = AURA_REMOVE_BY_DEFAULT);

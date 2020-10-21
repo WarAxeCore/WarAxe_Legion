@@ -18,7 +18,48 @@
 
 #include "greenstone_village.h"
 #include "ScriptedCreature.h"
+#include "Scenario.h"
+#include "ScenarioMgr.h"
+#include "AchievementMgr.h"
+
+enum scenario_information
+{
+    // Stage 1 of 5
+    Scenario_Progress_La_Liupo = 19204, //20981
+    Scenario_Progress_Mayor_Lin = 19199,
+    Scenario_Progress_Meila = 19200,
+    Scenario_Progress_Portly_Shung = 19201,
+    Scenario_Progress_Scribe_Rinji = 19202,
+    Scenario_Progress_Swan = 19203,
+};
+
+class mob_trigger_la_liupo : public CreatureScript
+{
+public:
+    mob_trigger_la_liupo() : CreatureScript("mob_trigger_la_liupo") { }
+
+    bool OnGossipHello(Player* player, Creature* creature)
+    {
+        if (creature->GetEntry() == 61343 || creature->GetEntry() == 61342)
+        {
+			for (Map::PlayerList::const_iterator itr = instance->GetPlayers().begin(); itr != instance->GetPlayers().end(); ++itr)
+			{
+				Player* player = itr->getSource();
+				if (!player)
+					continue;
+
+				player->UpdateAchievementCriteria(CRITERIA_TYPE_SCRIPT_EVENT_3, 42260);
+
+			}
+
+           player->SEND_GOSSIP_MENU(15073, creature->GetGUID());
+        }
+        return true;
+    }
+};
+
 
 void AddSC_greenstone_village()
 {
+    new mob_trigger_la_liupo();
 }

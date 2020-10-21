@@ -373,6 +373,8 @@ m_achievementMgr(sf::safe_ptr<AchievementMgr<Player>>(this))
     m_lastFallTime = 0;
     m_lastFallZ = 0;
 
+    MaxHealedHealthPct = 80;
+
     m_grantableLevels = 0;
 
     m_ControlledByPlayer = true;
@@ -32968,12 +32970,14 @@ void Player::UpdateAchievementCriteria(CriteriaTypes type, uint32 miscValue1 /*=
     // Update only individual achievement criteria here, otherwise we may get multiple updates
     // from a single boss kill
     if (!ignoreGroup && sAchievementMgr->IsGroupCriteriaType(type))
+        TC_LOG_ERROR(LOG_FILTER_ACHIEVEMENTSYS, "error something didnt make it (ignoreGroup)");
         return;
 
     // Update scenario/challenge criterias
     if (uint32 instanceId =  map && InInstance() ? map->GetInstanceId() : 0)
         if (Scenario* progress = sScenarioMgr->GetScenario(instanceId))
             progress->GetAchievementMgr().UpdateAchievementCriteria(referenceCache);
+            TC_LOG_ERROR(LOG_FILTER_ACHIEVEMENTSYS, "error something didnt make it (referenceCache)");
 
     // Update only individual achievement criteria here, otherwise we may get multiple updates
     if (Guild* guild = sGuildMgr->GetGuildById(GetGuildId()))

@@ -18,6 +18,8 @@
 
 #include "MiscPackets.h"
 #include "pursuing_the_black_harvest.h"
+#include "ScriptMgr.h"
+#include "ScriptedCreature.h"
 
 Position const atPos[]
 {

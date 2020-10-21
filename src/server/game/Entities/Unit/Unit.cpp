@@ -241,6 +241,7 @@ playerDamageTaken_(), npcDamageTaken_()
     m_attackDist = MELEE_RANGE;
     Zliquid_status = LIQUID_MAP_NO_WATER;
 
+    _oppressionStacks = 0;
     m_extraAttacks = 0;
     countCrit = 0;
     m_canDualWield = false;
@@ -4713,6 +4714,134 @@ void Unit::_UnapplyAura(AuraApplication* aurApp, AuraRemoveMode removeMode)
         ++iter;
     }
     // ASSERT(false);
+}
+
+// Should be 3.3 million per boss but also heard 4mill
+void Unit::SetScaledHp(uint32 regularHp)
+{
+    if (!GetMap()->IsRaid())
+        return;
+
+    if (!GetMap())
+        return;
+
+    int8 playerCount = 0;
+    playerCount = GetMap()->GetPlayerCount();
+
+    if (GetMap()->GetDifficultyID() == DIFFICULTY_LFR)
+    {
+        SetMaxHealth(regularHp);
+        SetHealth(regularHp);
+    }
+
+    if (GetMap()->GetDifficultyID() == DIFFICULTY_NORMAL_RAID || GetMap()->GetDifficultyID() == DIFFICULTY_HEROIC_RAID || GetMap()->GetDifficultyID() == DIFFICULTY_10_N || GetMap()->GetDifficultyID() == DIFFICULTY_25_N || GetMap()->GetDifficultyID() == DIFFICULTY_10_HC || GetMap()->GetDifficultyID() == DIFFICULTY_25_HC)
+    {
+        if (playerCount <= 10)
+        {
+            SetMaxHealth(regularHp);
+            SetHealth(regularHp);
+        }
+        if (playerCount == 11)
+        {
+            SetMaxHealth(regularHp + 4000000);
+            SetHealth(regularHp + 4000000);
+        }
+        if (playerCount == 12)
+        {
+            SetMaxHealth(regularHp + 8000000);
+            SetHealth(regularHp + 8000000);
+        }
+        if (playerCount == 13)
+        {
+            SetMaxHealth(regularHp + 12000000);
+            SetHealth(regularHp + 12000000);
+        }
+        if (playerCount == 14)
+        {
+            SetMaxHealth(regularHp + 16000000);
+            SetHealth(regularHp + 16000000);
+        }
+        if (playerCount == 15)
+        {
+            SetMaxHealth(regularHp + 20000000);
+            SetHealth(regularHp + 20000000);
+        }
+        if (playerCount == 16)
+        {
+            SetMaxHealth(regularHp + 24000000);
+            SetHealth(regularHp + 24000000);
+        }
+        if (playerCount == 17)
+        {
+            SetMaxHealth(regularHp + 28000000);
+            SetHealth(regularHp + 28000000);
+        }
+        if (playerCount == 18)
+        {
+            SetMaxHealth(regularHp + 32000000);
+            SetHealth(regularHp + 32000000);
+        }
+        if (playerCount == 19)
+        {
+            SetMaxHealth(regularHp + 36000000);
+            SetHealth(regularHp + 36000000);
+        }
+        if (playerCount == 20)
+        {
+            SetMaxHealth(regularHp + 40000000);
+            SetHealth(regularHp + 40000000);
+        }
+        if (playerCount == 21)
+        {
+            SetMaxHealth(regularHp + 40000000);
+            SetHealth(regularHp + 40000000);
+        }
+        if (playerCount == 22)
+        {
+            SetMaxHealth(regularHp + 44000000);
+            SetHealth(regularHp + 44000000);
+        }
+        if (playerCount == 23)
+        {
+            SetMaxHealth(regularHp + 48000000);
+            SetHealth(regularHp + 48000000);
+        }
+        if (playerCount == 24)
+        {
+            SetMaxHealth(regularHp + 52000000);
+            SetHealth(regularHp + 52000000);
+        }
+        if (playerCount == 25)
+        {
+            SetMaxHealth(regularHp + 56000000);
+            SetHealth(regularHp + 56000000);
+        }
+        if (playerCount == 26)
+        {
+            SetMaxHealth(regularHp + 60000000);
+            SetHealth(regularHp + 60000000);
+        }
+        if (playerCount == 27)
+        {
+            SetMaxHealth(regularHp + 64000000);
+            SetHealth(regularHp + 64000000);
+        }
+        if (playerCount == 28)
+        {
+            SetMaxHealth(regularHp + 68000000);
+            SetHealth(regularHp + 68000000);
+        }
+        if (playerCount == 29)
+        {
+            SetMaxHealth(regularHp + 72000000);
+            SetHealth(regularHp + 72000000);
+        }
+        if (playerCount == 30)
+        {
+            SetMaxHealth(regularHp + 76000000);
+            SetHealth(regularHp + 76000000);
+        }
+    }
 }
 
 void Unit::_RemoveNoStackAurasDueToAura(Aura* aura)
@@ -14972,6 +15101,12 @@ bool Unit::_IsValidAttackTarget(Unit const* target, SpellInfo const* bySpell, Wo
         return (GetByteValue(UNIT_FIELD_BYTES_2, 1) & UNIT_BYTE2_FLAG_UNK1) || (target->GetByteValue(UNIT_FIELD_BYTES_2, 1) & UNIT_BYTE2_FLAG_UNK1);
     }
     return true;
+}
+
+void Unit::BossYell(const char* text, uint32 soundId)
+{
+    MonsterYell(text, 0, ObjectGuid::Empty);
+    PlayDirectSound(soundId);
 }
 
 bool Unit::IsValidAssistTarget(Unit const* target) const

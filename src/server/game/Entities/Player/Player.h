@@ -1563,6 +1563,8 @@ class Player : public Unit, public GridObject<Player>
         bool InvisibleStatusMapRequirements();
         void SendInvisibleStatusMsg(uint8 msgId);
 
+		void updateScenarioProgress();
+
         bool HaveSpectators();
         void SendSpectatorAddonMsgToBG(SpectatorAddonMsg& msg);
         bool IsSpectateCanceled();
@@ -1608,6 +1610,8 @@ class Player : public Unit, public GridObject<Player>
 
         RestType GetRestType() const { return rest_type; }
         void SetRestType(RestType n_r_type) { rest_type = n_r_type; }
+
+        uint32 MaxHealedHealthPct;
 
         uint32 GetInnPosMapId() const { return inn_pos_mapid; }
         float GetInnPosX() const { return inn_pos_x; }
