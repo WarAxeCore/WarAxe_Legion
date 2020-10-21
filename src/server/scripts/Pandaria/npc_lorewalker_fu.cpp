@@ -47,11 +47,20 @@ public:
 		if (!player)
 			return false;
 
+        if (action == GOSSIP_ACTION_INFO_DEF + 1)
+        {
+            std::set<uint32> Slot_Scenario;
+            Slot_Scenario.clear();
+            Slot_Scenario.insert(492);
+            sLFGMgr->JoinLfg(player, player->GetSpecializationRoleMaskForGroup(), Slot_Scenario);
+        }
+
 		if (action == GOSSIP_ACTION_INFO_DEF + 4)
 		{
-			std::set<uint32> Slot_s;
-			Slot_s.insert(511);
-			sLFGMgr->JoinLfg(player, player->GetSpecializationRoleMaskForGroup(), Slot_s);
+			std::set<uint32> Slot_Scenario;
+            Slot_Scenario.clear();
+			Slot_Scenario.insert(511);
+			sLFGMgr->JoinLfg(player, player->GetSpecializationRoleMaskForGroup(), Slot_Scenario);
 		}
 
 		player->CLOSE_GOSSIP_MENU();
