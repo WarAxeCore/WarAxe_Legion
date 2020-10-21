@@ -174,8 +174,14 @@ void LFGGroupScript::OnRemoveMember(Group* group, ObjectGuid const& guid, Remove
 
     if (Player* player = ObjectAccessor::FindPlayer(guid))
     {
-        if (method == GROUP_REMOVEMETHOD_LEAVE && state == LFG_STATE_DUNGEON && players >= sLFGMgr->GetVotesNeededForKick(group->GetGUID()))
-            player->CastSpell(player, LFG_SPELL_DUNGEON_DESERTER, true);
+		if (method == GROUP_REMOVEMETHOD_LEAVE && state == LFG_STATE_DUNGEON && players >= sLFGMgr->GetVotesNeededForKick(group->GetGUID()))
+		{
+			//Check if player has killed at least 1 boss, if true then dungeon deserter shouldn't be given (blizzlike)
+			if (!sLFGMgr->GetCompletedMask(group->GetGUID()) > 0)
+			{
+				player->CastSpell(player, LFG_SPELL_DUNGEON_DESERTER, true);
+			}
+		}
         //else if (state == LFG_STATE_BOOT)
             // Update internal kick cooldown of kicked
 
